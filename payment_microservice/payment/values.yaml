@@ -1,0 +1,48 @@
+replicaCount: 1
+image:
+  repository: payment
+  pullPolicy: Never
+  tag: "1.0.0"
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+service:
+  type: LoadBalancer
+  port: 8882
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+resources: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+nodeSelector: {}
+tolerations: []
+affinity: {}
+extraEnv: |
+  - name: PAYMENT_DATABASE_HOST
+    value: postgres.default.svc.cluster.local
+  - name: PAYMENT_DATABASE_PORT
+    value: '5432'
+  - name: PAYMENT_DATABASE_NAME
+    value: postgres
+  - name: PAYMENT_DATABASE_USERNAME
+    value: postgres
+  - name: PAYMENT_DATABASE_PASSWORD
+    value: mysecretpassword
